@@ -1,0 +1,75 @@
+:root {
+    /* Color palette */
+    --color-bg: #F7F6F3;
+    --color-surface: #FFFFFF;
+    --color-text-primary: #1A1D23;
+    --color-text-secondary: #5B6270;
+    --color-border: #E2E0DB;
+    --color-link: #1F4E8C;
+    --color-alert: #C8102E;
+    --color-positive: #1E7F4F;
+    --color-warning: #C77700;
+    --color-highlight: #E6EEF8;
+
+    /* Font */
+    --font-head: "Newsreader", Georgia, serif;
+    --font-body: "Inter", system-ui, sans-serif;
+
+    /* Dark mode colors */
+    --color-dark-bg: #111418;
+    --color-dark-surface: #1A1E24;
+    --color-dark-primary: #ECEDEF;
+    --color-dark-secondary: #9AA1AD;
+    --color-dark-border: #2A2F37;
+    --color-dark-links: #6FA3E8;
+    --color-dark-alert: #F0505F;
+    --color-dark-positive: #4CC38A;
+    --color-dark-warning: #F2A93B;
+}
+
+/* Global font settings */
+body {
+    /* Font */
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+
+    /* Appearance */
+    background-color: var(--color-bg);
+    margin: 2% 5%;
+}
+
+h1, h2 {
+    font-family: var(--font-head);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 20px; }
+
+.meta {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+/* Nav bar */
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-icons {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 0;
+}
+
+img {
+    max-width: 50%;
+    max-weight: 50%;
+}
