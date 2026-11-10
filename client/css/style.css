@@ -1,5 +1,23 @@
 :root {
-    /* Color palette */
+    --color-bg: #111418;
+    --color-surface: #1A1E24;
+    --color-text-primary: #ECEDEF;
+    --color-text-secondary: #9AA1AD;
+    --color-border: #2A2F37;
+    --color-link: #6FA3E8;
+    --color-alert: #F0505F;
+    --color-positive: #4CC38A;
+    --color-warning: #F2A93B;
+    --color-highlight: #1E2A3A;
+
+    --font-head: "Newsreader", Georgia, serif;
+    --font-body: "Inter", system-ui, sans-serif;
+
+    color-scheme: dark;
+}
+
+/* Light theme: set data-theme="light" on <html> */
+:root[data-theme="light"] {
     --color-bg: #F7F6F3;
     --color-surface: #FFFFFF;
     --color-text-primary: #1A1D23;
@@ -11,31 +29,15 @@
     --color-warning: #C77700;
     --color-highlight: #E6EEF8;
 
-    /* Font */
-    --font-head: "Newsreader", Georgia, serif;
-    --font-body: "Inter", system-ui, sans-serif;
-
-    /* Dark mode colors */
-    --color-dark-bg: #111418;
-    --color-dark-surface: #1A1E24;
-    --color-dark-primary: #ECEDEF;
-    --color-dark-secondary: #9AA1AD;
-    --color-dark-border: #2A2F37;
-    --color-dark-links: #6FA3E8;
-    --color-dark-alert: #F0505F;
-    --color-dark-positive: #4CC38A;
-    --color-dark-warning: #F2A93B;
+    color-scheme: light;
 }
 
-/* Global font settings */
 body {
-    /* Font */
     font-family: var(--font-body);
     font-size: 16px;
     line-height: 1.5;
-
-    /* Appearance */
     background-color: var(--color-bg);
+    color: var(--color-text-primary);
     margin: 2% 5%;
 }
 
@@ -53,7 +55,10 @@ h2 { font-size: 20px; }
     color: var(--color-text-secondary);
 }
 
-/* Nav bar */
+p {
+    margin: 0;
+}
+
 nav {
     display: flex;
     flex-direction: row;
@@ -69,7 +74,9 @@ nav {
     padding: 0;
 }
 
-img {
-    max-width: 50%;
-    max-weight: 50%;
+.story-details {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }

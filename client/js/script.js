@@ -1,29 +1,29 @@
-async function getTopHeadlines () {
-    const url = "http://localhost:3000/headlines";
+async function getTopStories () {
+    const url = "http://localhost:3000/";
     try {
-        const response = await fetch(url, {
-            method: "GET"
-        });
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
 
         const result = await response.json();
         
-        const headlinerNews = document.querySelector(".headlinerNews");
-        headlinerNews.innerHTML = result.map(article => (
-            `<div class="article">
-                <img src="${article.urlToImage}">
-                <h1>${article.title}</h1>
-                <h2>${article.description}</h2>
-                <h3>By: ${article.author}</h3>
-                <h3>${new Date(article.publishedAt).toLocaleString()}</h3>
-                <p>${article.content}</p>
+        const topStories = document.querySelector(".top-stories");
+        topStories.innerHTML = result.map(story => (
+            `<div class="story">
+                <h2>${story.title}</h2>
+                <ul class="story-details">
+                    <li><a href="${story.url}">Read here</a></li>
+                    <li><p>By: ${story.by}</p></li>
+                    <li><p>${story.score} points</p></li>
+                </ul>
+                <br/>
             </div>`
         )).join("");
+        console.log(result);
     } catch (error) {
         console.log(error.message);
     }
 }
 
-getTopHeadlines()
+getTopStories()

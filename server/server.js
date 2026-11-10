@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import router from './routes/news.routes.js';
+import router from './routes/stories.routes.js';
 
 const app = express();
 const port = 3000;

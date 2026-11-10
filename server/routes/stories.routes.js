@@ -1,9 +1,9 @@
 import express from 'express';
-import getTopHeadlines from '../controllers/news.controller.js'; 
+import { getStories } from '../controllers/stories.controller.js'; 
 
 const router = express.Router();
 
-router.get('/headlines', getTopHeadlines);
+router.get('/', getStories);
 
 router.post('/', (req, res) => {
   res.send('Got a POST request');
