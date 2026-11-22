@@ -1,7 +1,7 @@
 const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
-async function getStories () {
-    const url = "http://localhost:3000/";
+async function getStories (feed = 'top') {
+    const url = `http://localhost:3000?feed=${feed}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -60,3 +60,17 @@ function getTimeAgo(unixSeconds) {
 }
 
 getStories()
+
+const sortDiv = document.querySelector('.sort-buttons');
+
+sortDiv.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button) {
+        const buttons = sortDiv.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.classList.remove('active');
+        })
+        getStories(button.id);
+        button.classList.add('active');
+    }
+})

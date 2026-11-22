@@ -95,6 +95,37 @@ nav {
     gap: var(--space-lg);
 }
 
+button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.sort {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+}
+
+.sort-buttons {
+    display: flex;
+}
+
+.sort-buttons button {
+    padding: var(--space-xs) var(--space-md);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+}
+
+.sort-buttons button + button { margin-left: -1px; }
+.sort-buttons button:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+.sort-buttons button:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+
+.sort-buttons .active {
+    background-color: var(--color-surface);
+}
+
 .stories {
     display: flex;
     flex-direction: column;
