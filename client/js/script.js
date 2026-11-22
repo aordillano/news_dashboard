@@ -6,8 +6,11 @@ const hamburgerBtn = document.getElementById('hamburger');
 const closeMenuBtn = document.getElementById('close-menu');
 const sidebar = document.querySelector('.sidebar');
 
+// Nav sidebar
+const sidebarNav = document.querySelector('.sidebar-nav');
+
 // Sort (new, best, top)
-const sortDiv = document.querySelector('.sort-buttons');
+const sortButtonsContainer = document.querySelector('.sort-buttons');
 
 // Stories container
 const storiesContainer = document.querySelector(".stories");
@@ -32,8 +35,15 @@ function getTimeAgo(unixSeconds) {
     }
 }
 
-function renderStories(fetchedStories) {
-    storiesContainer.innerHTML = fetchedStories.map((story) => {
+function setActive(container, button) {
+    container.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('active');
+    })
+    button.classList.add('active');
+}
+
+function renderStories(stories) {
+    storiesContainer.innerHTML = stories.map((story) => {
         const domain = getDomain(story);
         const timeAgo = getTimeAgo(story.time);
         
@@ -58,7 +68,7 @@ function renderStories(fetchedStories) {
     }).join("");
 }
 
-async function getStories (feed = 'top') {
+async function loadStories (feed = 'top') {
     const url = `http://localhost:3000?feed=${feed}`;
     try {
         const response = await fetch(url);
@@ -66,39 +76,57 @@ async function getStories (feed = 'top') {
             throw new Error(`Response status: ${response.status}`);
         }
 
-        const result = await response.json();
+        const stories = await response.json();
 
-        renderStories(result);
+        renderStories(stories);
     } catch (error) {
         console.log(error.message);
     }
-};
+}
 
 function openMenu() {
     sidebar.classList.add('open');
     hamburgerBtn.setAttribute('aria-expanded', 'true');
     closeMenuBtn.focus();
-};
+}
 
 function closeMenu() {
     sidebar.classList.remove('open');
     hamburgerBtn.setAttribute('aria-expanded', 'false');
     hamburgerBtn.focus();
-};
+}
 
-sortDiv.addEventListener('click', (event) => {
-    const button = event.target.closest('button');
-    if (button) {
-        const buttons = sortDiv.querySelectorAll('button');
-        buttons.forEach(btn => {
-            btn.classList.remove('active');
-        })
-        getStories(button.id);
-        button.classList.add('active');
-    }
-})
+function setSortDisabled(value) {
+    sortButtonsContainer.querySelectorAll('button').forEach((button) => {
+        button.disabled = value;
+    });
+}
 
 hamburgerBtn.addEventListener('click', openMenu);
 closeMenuBtn.addEventListener('click', closeMenu);
 
-getStories()
+sortButtonsContainer.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button) {
+        setActive(sortButtonsContainer, button);
+        loadStories(button.id);
+    }
+});
+
+sidebarNav.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button) {
+        if (button.id === 'news') {
+            loadStories(sortButtonsContainer.querySelector('.active').id);
+            setSortDisabled(false);
+        } else {
+            loadStories(button.id);
+            setSortDisabled(true);
+        }
+
+        setActive(sidebarNav, button);
+        closeMenu();
+    }
+})
+
+loadStories()

@@ -110,12 +110,17 @@ header nav {
     transition: transform 150ms ease-in-out, visibility 150ms;
     transform: translateX(-100%);
     visibility: hidden;
+    z-index: 10;
 }
 
-.sidebar nav {
+.sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+}
+
+.sidebar-nav .active {
+    background-color: var(--color-highlight);
 }
 
 .sidebar.open {
@@ -159,6 +164,11 @@ button {
 .sort-buttons button + button { margin-left: -1px; }
 .sort-buttons button:first-child { border-radius: var(--radius) 0 0 var(--radius); }
 .sort-buttons button:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+
+.sort-buttons button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 .sort-buttons .active {
     background-color: var(--color-surface);
