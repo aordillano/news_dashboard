@@ -1,43 +1,16 @@
+// Relative time formatter
 const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
-async function getStories (feed = 'top') {
-    const url = `http://localhost:3000?feed=${feed}`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-        }
+// Sidebar
+const hamburgerBtn = document.getElementById('hamburger');
+const closeMenuBtn = document.getElementById('close-menu');
+const sidebar = document.querySelector('.sidebar');
 
-        const result = await response.json();
-        
-        const stories = document.querySelector(".stories");
-        stories.innerHTML = result.map((story) => {
-            const domain = getDomain(story);
-            const timeAgo = getTimeAgo(story.time);
-            return `<div class="story">
-                <ul class="score">
-                    <li><i class="fa-solid fa-arrow-up"></i></li>
-                    <li>${story.score}</li>
-                </ul>
-                <div class="story-body">
-                    <a href="${story.url ?? `https://news.ycombinator.com/item?id=${story.id}`}"><h2>${story.title}</h2></a>
-                    <ul class="meta">
-                        <li class="source">
-                            <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" width="16" height="16" alt="" loading="lazy">
-                            ${domain}
-                        </li>
-                        <li>By: ${story.by}</li>
-                        <li>${timeAgo}</li>
-                        <li>${story.descendants ?? 0} comments</li>
-                    </ul>
-                </div>
-            </div>`
-        }).join("");
-        console.log(result);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
+// Sort (new, best, top)
+const sortDiv = document.querySelector('.sort-buttons');
+
+// Stories container
+const storiesContainer = document.querySelector(".stories");
 
 function getDomain(story) {
     return new URL(story.url ? story.url : "https://news.ycombinator.com").hostname;
@@ -59,9 +32,59 @@ function getTimeAgo(unixSeconds) {
     }
 }
 
-getStories()
+function renderStories(fetchedStories) {
+    storiesContainer.innerHTML = fetchedStories.map((story) => {
+        const domain = getDomain(story);
+        const timeAgo = getTimeAgo(story.time);
+        
+        return `<div class="story">
+            <ul class="score">
+                <li><i class="fa-solid fa-arrow-up"></i></li>
+                <li>${story.score}</li>
+            </ul>
+            <div class="story-body">
+                <a href="${story.url ?? `https://news.ycombinator.com/item?id=${story.id}`}"><h2>${story.title}</h2></a>
+                <ul class="meta">
+                    <li class="source">
+                        <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" width="16" height="16" alt="" loading="lazy">
+                        ${domain}
+                    </li>
+                    <li>By: ${story.by}</li>
+                    <li>${timeAgo}</li>
+                    <li>${story.descendants ?? 0} comments</li>
+                </ul>
+            </div>
+        </div>`
+    }).join("");
+}
 
-const sortDiv = document.querySelector('.sort-buttons');
+async function getStories (feed = 'top') {
+    const url = `http://localhost:3000?feed=${feed}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        renderStories(result);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+function openMenu() {
+    sidebar.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    closeMenuBtn.focus();
+};
+
+function closeMenu() {
+    sidebar.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    hamburgerBtn.focus();
+};
 
 sortDiv.addEventListener('click', (event) => {
     const button = event.target.closest('button');
@@ -74,3 +97,8 @@ sortDiv.addEventListener('click', (event) => {
         button.classList.add('active');
     }
 })
+
+hamburgerBtn.addEventListener('click', openMenu);
+closeMenuBtn.addEventListener('click', closeMenu);
+
+getStories()

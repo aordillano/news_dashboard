@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,23 +15,45 @@
     <header>
         <nav>
             <ul class="nav-icons">
-                <li><i class="fa-solid fa-bars" id="hamburger"></i></li>
-                <li><i class="fa-solid fa-magnifying-glass"></i></li>
+                <li>
+                  <button id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+                    <i class="fa-solid fa-bars"></i>
+                  </button>
+                </li>
+                <li>
+                  <button id="search" aria-label="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </li>
             </ul>
             <p>Tech News Dashboard</p>
             <i class="fa-solid fa-user"></i>
         </nav>
     </header>
 
-    <div class="sort">
-      <p>Sort by: </p>
-      <div class="sort-buttons">
-        <button id="best" type="button">Best</button>
-        <button id="new" type="button">New</button>
-        <button id="top" class="active" type="button">Top</button>
-      </div>
-    </div>
+    <aside id="sidebar" class="sidebar">
+      <button id="close-menu" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <nav>
+        <button id="news">News Feed</button>
+        <button id="ask">Ask HN</button>
+        <button id="show">Show HN</button>
+        <button id="job">Jobs</button>
+      </nav>
+    </aside>
 
-    <div class="stories"></div>
+    <main>
+      <div class="sort">
+        <p>Sort by: </p>
+        <div class="sort-buttons">
+          <button id="best" type="button">Best</button>
+          <button id="new" type="button">New</button>
+          <button id="top" class="active" type="button">Top</button>
+        </div>
+      </div>
+
+      <div class="stories"></div>
+    </main>
   </body>
 </html>
